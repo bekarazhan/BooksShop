@@ -1,28 +1,61 @@
-﻿using BooksShop.Interfaces;
+﻿using AutoMapper;
+using BooksShop.Interfaces;
 using BooksShop.Models;
+using BooksShop.ViewModels;
 
 namespace BooksShop.Services
 {
     public class BookService : IBookService
     {
-        private static readonly List<Book> _books = new List<Book>()
-  {
-    // Add some sample book data here
-    new Book { Id = 1, Title = "Pride and Prejudice", Author = "Jane Austen" },
-    new Book { Id = 2, Title = "To Kill a Mockingbird", Author = "Harper Lee" },
-    // Add more books as needed
-  };
+        private readonly IBookRepository _bookRepository;
+        private readonly IMapper _mapper;
 
-        public Task<List<Book>> GetAllBooks()
+        public BookService(IBookRepository bookRepository,
+            IMapper mapper
+            )
         {
-            // Return a copy of the list to avoid modifying the original data
-            return Task.FromResult(new List<Book>(_books));
+            _bookRepository = bookRepository;
+            _mapper = mapper;
+        }
+        public async Task<BookVm> AddBook(Book bookDTO)
+        {
+            var book = _bookRepository.AddBook(bookDTO).Result;
+            var bookVm = _mapper.Map<BookVm>(book);
+
+            //BookVm bookVm = new BookVm() { //mapping
+            //    Id = book.Id,
+            //    Title = book.Title,
+            //    PublisherName = book.Publisher.Name
+            //};
+            return bookVm;
         }
 
-        public Task<Book> GetBookById(int id)
+        public async Task DeleteBook(int id)
         {
-            var book = _books.FirstOrDefault(b => b.Id == id);
-            return Task.FromResult(book);
+            _bookRepository.DeleteBook(id);
+        }
+
+        public async Task<List<BookVm>> GetAllBooks()
+        {
+            var books = await _bookRepository.GetAllBooks();
+            var bookVmList = _mapper.Map<List<BookVm>>(books);
+            return bookVmList;
+        }
+
+        public async Task<BookVm> GetBookById(int id)
+        {
+            var book = await _bookRepository.GetBookById(id);
+            var bookVm = _mapper.Map<BookVm>(book);
+            return bookVm;
+        }
+
+        public async Task UpdateBook(BookVm bookDTO)
+        {
+            var book = await _bookRepository.GetBookById(bookDTO.Id);
+            book.Title = bookDTO.Title;
+            await _bookRepository.UpdateBook(book);
+            //book.Publisher.Name = bookDTO.PublisherName;
+            return;
         }
     }
 }

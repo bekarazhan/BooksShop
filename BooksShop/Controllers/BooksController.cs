@@ -1,4 +1,5 @@
-﻿using BooksShop.Interfaces;
+﻿using BooksShop.Data;
+using BooksShop.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksShop.Controllers
@@ -6,6 +7,7 @@ namespace BooksShop.Controllers
     public class BookController : Controller
     {
         private readonly IBookService _bookService; // Dependency for accessing book data
+        private readonly BookContext _context;
 
         public BookController(IBookService bookService) // Injecting BookService dependency
         {
@@ -17,6 +19,7 @@ namespace BooksShop.Controllers
             var books = _bookService.GetAllBooks();
             return View(books);
         }
+
 
         public IActionResult Details(int id)
         {
