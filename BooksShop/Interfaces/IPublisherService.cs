@@ -5,11 +5,11 @@ namespace BooksShop.Interfaces
 {
     public interface IPublisherService
     {
-        Task<List<PublisherVm>> GetAllPublishers();
-        Task<PublisherVm> GetPublisherById(int id);
-        Task<PublisherVm> AddPublisher(PublisherVm publisherDTO);
-        Task UpdatePublisher(PublisherVm publisherDTO);
-        Task DeletePublisher(int id);
+        Task<List<PublisherVm>> GetAllPublishersAsync();
+        Task<PublisherVm> GetPublisherByIdAsync(int id);
+        Task<PublisherVm> AddPublisherAsync(PublisherVm publisherDTO);
+        Task UpdatePublisherAsync(PublisherVm publisherDTO);
+        Task DeletePublisherAsync(int id);
     }
 
 }
