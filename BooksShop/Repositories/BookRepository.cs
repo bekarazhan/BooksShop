@@ -1,6 +1,7 @@
 ﻿using BooksShop.Data;
 using BooksShop.Interfaces;
 using BooksShop.Models;
+using BooksShop.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksShop.Repositories
@@ -13,6 +14,7 @@ namespace BooksShop.Repositories
         {
             _context = context;
         }
+        
 
         public async Task<Book> AddBook(Book book)
         {
@@ -33,7 +35,7 @@ namespace BooksShop.Repositories
 
         public async Task<List<Book>> GetAllBooks()
         {
-            return await _context.Books.ToListAsync();
+            return await _context.Books.Include(x=>x.Publisher).ToListAsync();
         }
 
         public async Task<Book> GetBookById(int id)

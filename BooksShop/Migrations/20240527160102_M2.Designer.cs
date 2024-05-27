@@ -2,6 +2,7 @@
 using BooksShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,41 +10,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksShop.Migrations
 {
     [DbContext(typeof(BookContext))]
-    partial class BookContextModelSnapshot : ModelSnapshot
+    [Migration("20240527160102_M2")]
+    partial class M2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.30");
-
-            modelBuilder.Entity("AuthorBook", b =>
-                {
-                    b.Property<int>("AuthorsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BooksId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AuthorsId", "BooksId");
-
-                    b.HasIndex("BooksId");
-
-                    b.ToTable("AuthorBook");
-                });
-
-            modelBuilder.Entity("BooksShop.Models.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Author");
-                });
 
             modelBuilder.Entity("BooksShop.Models.Book", b =>
                 {
@@ -82,21 +55,6 @@ namespace BooksShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Publishers");
-                });
-
-            modelBuilder.Entity("AuthorBook", b =>
-                {
-                    b.HasOne("BooksShop.Models.Author", null)
-                        .WithMany()
-                        .HasForeignKey("AuthorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BooksShop.Models.Book", null)
-                        .WithMany()
-                        .HasForeignKey("BooksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("BooksShop.Models.Book", b =>
