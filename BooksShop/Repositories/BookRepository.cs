@@ -33,7 +33,7 @@ namespace BooksShop.Repositories
 
         public async Task<List<Book>> GetAllBooks()
         {
-            return await _context.Books.ToListAsync();
+            return await _context.Books.Include(x => x.Publisher).ToListAsync();
         }
 
         public async Task<Book> GetBookById(int id)
