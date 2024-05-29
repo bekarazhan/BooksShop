@@ -14,6 +14,7 @@ builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 builder.Services.AddScoped<IPublisherService, PublisherService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<BookContext>();
+builder.Services.AddHostedService<BooksBackgroundService>();
 
 var app = builder.Build();
 
