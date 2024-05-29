@@ -18,10 +18,16 @@ namespace BooksShop.Controllers
         }
 
         // Index action to list all books
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string? sortBy)
         {
-            var books = await _bookService.GetAllBooksAsync();
-            return View(books);
+            //var books = await _bookService.GetBooksDescNamesAsync();
+            switch (sortBy) {
+                case "":
+                    return View(await _bookService.GetAllBooksAsync());
+                case "1":
+                    return View(await _bookService.GetBooksDescNamesAsync());
+            }
+            return View(await _bookService.GetAllBooksAsync());
         }
 
         // Details action to view a single book

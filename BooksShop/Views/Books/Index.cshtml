@@ -10,6 +10,8 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
+
+
 <table class="table">
     <thead>
         <tr>
@@ -19,7 +21,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.PublisherName)
             </th>
-            <th></th>
+            <th>
+                <div>
+                    <a href="@Url.Action("Index", new { sortBy = "" })">Sort by Title (A-Z)</a> |
+                    <a href="@Url.Action("Index", new { sortBy = "1" })">Sort by Title (Z-A)</a>
+                </div>
+            </th>
         </tr>
     </thead>
     <tbody>
