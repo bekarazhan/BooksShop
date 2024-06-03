@@ -15,7 +15,7 @@ builder.Services.AddScoped<IPublisherService, PublisherService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<BookContext>();
 
-var app = builder.Build();
+var app = builder.Build(); 
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
