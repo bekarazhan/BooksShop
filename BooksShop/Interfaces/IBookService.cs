@@ -10,6 +10,10 @@ namespace BooksShop.Interfaces
         Task AddBookAsync(BookVm book);
         Task UpdateBookAsync(BookVm book);
         Task DeleteBookAsync(int id);
+
+        Task<IEnumerable<BookVm>> GetBooksDescNamesAsync();
+
+        Task<IEnumerable<BookVm>> GetBooksByFirstLetterAsync(string letter);
     }
 
 

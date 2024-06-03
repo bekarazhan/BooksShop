@@ -19,7 +19,7 @@ public class BookService : IBookService
     public async Task<IEnumerable<BookVm>> GetAllBooksAsync()
     {
         var books = await _bookRepository.GetAllBooks();
-        return _mapper.Map<IEnumerable<BookVm>>(books);
+        return _mapper.Map<IEnumerable<BookVm>>(books.OrderBy(x=>x.Title));
     }
 
     public async Task<BookVm> GetBookByIdAsync(int id)
@@ -53,5 +53,24 @@ public class BookService : IBookService
     public async Task DeleteBookAsync(int id)
     {
         await _bookRepository.DeleteBook(id);
+    }
+
+    public async Task<IEnumerable<BookVm>> GetBooksDescNamesAsync()
+    {
+        var books = await _bookRepository.GetAllBooks();
+        return _mapper.Map<IEnumerable<BookVm>>(books.OrderByDescending(x => x.Title));
+    }
+
+    public async Task<IEnumerable<BookVm>> GetBooksByFirstLetterAsync(string letter)
+    {
+        var books = await _bookRepository.GetAllBooks();
+        return _mapper.Map<IEnumerable<BookVm>>(books.Where(x => IsFirstLetter(x, letter))); //book.Title.StartWith()
+    }
+
+    private bool IsFirstLetter(Book book, string letter) {
+        if (book.Title[0].ToString() == letter) { 
+            return true;
+        }
+        return false;
     }
 }
